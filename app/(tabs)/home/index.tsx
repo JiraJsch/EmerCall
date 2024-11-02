@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Dimensions, Linking } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Dimensions, Linking, Alert } from "react-native";
+import MapView, { LatLng, Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import Dialog from "react-native-dialog"
+import * as Location from 'expo-location'
 import { Feather } from "@expo/vector-icons";
 import GradientBackground from "@/components/GredientBackground";
 import Card from "@/components/Card"
-import * as Location from 'expo-location'
-import MapView, { LatLng, Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import { useEffect, useRef, useState } from "react";
 import StyleUniform from "@/components/StyleUniform";
 
 const windowWidth = Dimensions.get("window").width;
@@ -22,6 +23,13 @@ const INITIAL_REGION = {
 };
 
 const DepartmentLine = (departmentName: string, hotLine: string) => {
+	const [dialogVisible, setDialogVisible] = useState(false);
+
+	const handleConfirmCall = () => {
+		goToCall(hotLine);
+		setDialogVisible(false);
+	}
+
   return (
     <Card
       style={{
@@ -38,10 +46,19 @@ const DepartmentLine = (departmentName: string, hotLine: string) => {
       >
         <Text style={styles.numberText}>{hotLine}</Text>
         <TouchableOpacity
-        //onPress={}
+					onPress={() => { setDialogVisible(true) }}
         >
           <Feather name="phone" size={24} color={"#222"} />
         </TouchableOpacity>
+
+				<Dialog.Container visible={dialogVisible}>
+				<Dialog.Title>ยืนยัน?</Dialog.Title>
+				<Dialog.Description>
+					คุณจะโทรไปยัง {departmentName} ({hotLine}) ใช่หรือไม่?
+				</Dialog.Description>
+				<Dialog.Button label="ไม่" onPress={() => setDialogVisible(false)} />
+				<Dialog.Button label="ใช่" onPress={handleConfirmCall} />
+			</Dialog.Container>
       </View>
     </Card>
   );
