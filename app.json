@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "EmerCall",
-    "slug": "EmerCall",
+    "slug": "emercall",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -31,6 +31,12 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "37d5e283-b4a7-4326-8e6e-786aeac3e8df"
+      }
+    },
+    "owner": "jiraj-sch"
   }
 }
