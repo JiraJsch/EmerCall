@@ -1,0 +1,8 @@
+Needs npm i:
+    expo-location
+    react-native-maps
+    expo-linear-gradient
+
+Needs api keys (in app.json)
+    expo.ios.config.googleMapsApiKey
+    expo.android.config.googleMaps.apiKey
