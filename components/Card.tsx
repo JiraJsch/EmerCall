@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
     marginVertical: 6,
   },
   cardContent: {
-    marginHorizontal: 18,
-    marginVertical: 10,
+    marginHorizontal: 12,
+    marginVertical: 8,
   },
 });
 

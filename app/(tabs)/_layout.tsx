@@ -8,7 +8,7 @@ const TabsLayout = () => {
         <Tabs.Screen
           name="home"
           options={{
-            headerTitle: "Home Page",
+            headerTitle: "Home",
             title: "Home",
             headerTitleAlign: "center",
             headerTintColor: "#fff",
@@ -21,7 +21,7 @@ const TabsLayout = () => {
         <Tabs.Screen
           name="emercall"
           options={{
-            headerTitle: "Emergency Call Page",
+            headerTitle: "Emergency Call",
             title: "Emergency Call",
             headerTitleAlign: "center",
             headerTintColor: "#fff",
@@ -34,7 +34,7 @@ const TabsLayout = () => {
         <Tabs.Screen
           name="settings"
           options={{
-            headerTitle: "Settings Page",
+            headerTitle: "Settings",
             headerTitleStyle: { textAlign: "center" },
             title: "Settings",
             headerTitleAlign: "center",

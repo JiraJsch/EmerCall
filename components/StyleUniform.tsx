@@ -17,6 +17,12 @@ const styleUniform = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
   },
+  subHeaderText: {
+    lineHeight: 40,
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "white",
+  },
   contentText: {
     height: 28,
     fontSize: 20,
@@ -61,6 +67,17 @@ const styleUniform = StyleSheet.create({
     borderWidth: 2,
     height: 48,
     marginBottom: 8,
+  },
+  card1: {
+    borderRadius: 10,
+    elevation: 3,
+    backgroundColor: "#dddddd",
+    marginHorizontal: 8,
+    marginVertical: 6,
+  },
+  cardContent: {
+    marginHorizontal: 12,
+    marginVertical: 8,
   },
 });
 
