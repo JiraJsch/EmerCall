@@ -5,7 +5,6 @@ import { Stack, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';
 import { TouchableOpacity, Text } from 'react-native';
-import BackButton from '@/components/backButton';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -48,24 +47,17 @@ function RootLayoutNav() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="sign-up"
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
         name="(tabs)"
         options={{ headerShown: false }}
       />
       <Stack.Screen
         name="map-search"
         options={{
-          headerTitle: "Map Search",
+          headerTitle: "ค้นหาแผนที่",
           headerTitleAlign: "center",
           headerTintColor: "#fff",
           headerStyle: {
             backgroundColor: "#000",
-          },
-          headerLeft: () => {
-            return <BackButton />;
           },
         }}
       />

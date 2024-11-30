@@ -1,11 +1,10 @@
-import { StyleSheet, Dimensions } from "react-native"
+import { StyleSheet, Dimensions, ViewStyle } from "react-native";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 const styleUniform = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 32,
     gap: 8,
   },
@@ -42,7 +41,6 @@ const styleUniform = StyleSheet.create({
     borderRadius: 24,
     elevation: 3,
     backgroundColor: "#222222",
-    height: 48,
   },
   buttonText: {
     textAlign: "center",
@@ -78,6 +76,13 @@ const styleUniform = StyleSheet.create({
   cardContent: {
     marginHorizontal: 12,
     marginVertical: 8,
+  },
+  numberText: {
+    fontSize: 24,
+  },
+  map: {
+    width: "100%",
+    height: windowHeight / 2,
   },
 });
 

@@ -11,13 +11,13 @@ import { Feather } from "@expo/vector-icons";
 export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   const getIcon = (RouteName: String) => {
     if (RouteName === "home") {
-      return <Feather name="home" size={24} color={"#222"} />;
+      return <Feather name="home" size={24} color={"#fff"} />;
     } else if (RouteName === "emercall") {
-      return <Feather name="alert-circle" size={24} color={"#222"} />;
+      return <Feather name="alert-circle" size={24} color={"#f00"} />;
     } else if (RouteName === "settings") {
-      return <Feather name="settings" size={24} color={"#222"} />;
+      return <Feather name="settings" size={24} color={"#fff"} />;
     } else {
-      return <Feather name="x" size={24} color={"#222"} />;
+      return <Feather name="x" size={24} color={"#fff"} />;
     }
   };
 
@@ -63,8 +63,15 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
             onLongPress={onLongPress}
             style={styles.tabbarItem}
           >
-            {getIcon(route.name) as unknown as String}
-            <Text style={{ color: isFocused ? "#673ab7" : "#222" }}>
+            {getIcon(route.name)}
+            <Text style={{
+              color:
+                label === "โทรฉุกเฉิน"
+                    ? "#ff0000"
+                    : isFocused
+                      ? "#673ab7"
+                      : "#ffffff"
+              }}>
               {label as string}
             </Text>
           </TouchableOpacity>
@@ -85,7 +92,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#bbbbbb",
+    backgroundColor: "#000",
     paddingVertical: 15,
   },
   tabbarItem: {

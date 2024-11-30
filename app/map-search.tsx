@@ -10,8 +10,6 @@ import { router } from "expo-router";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-//performance issue with MapView
-
 const goToCall: Function = (phoneNumber: string) => {
   return Linking.openURL(`tel:${phoneNumber}`);
 };
@@ -43,7 +41,6 @@ const mapViewPage = () => {
 
   const getLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
-    console.log(status);
     if (status !== "granted") {
       setErrorMsg("Permission to access location was denied");
       errorAlert(errorMsg!);
@@ -113,9 +110,22 @@ const mapViewPage = () => {
     <GradientBackground>
       <View style={{ flex: 1 }}>
         {userLocation === INITIAL_REGION && (
-          <View style={{flex: 1, backgroundColor:"#555", opacity:.5, justifyContent: "center"}}>
-            <Text style={[styleUniform.contentText, {alignSelf: "center"}]}>Getting Your Location...</Text>
-            <ActivityIndicator size="large" color="#fff" onLayout={getLocation} />
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: "#555",
+              opacity: 0.5,
+              justifyContent: "center",
+            }}
+          >
+            <Text style={[styleUniform.contentText, { alignSelf: "center" }]}>
+              {"กำลังดึงข้อมูลตำแหน่ง"}
+            </Text>
+            <ActivityIndicator
+              size="large"
+              color="#fff"
+              onLayout={getLocation}
+            />
           </View>
         )}
         {userLocation !== INITIAL_REGION && (
@@ -143,18 +153,26 @@ const mapViewPage = () => {
               : null}
           </MapView>
         )}
-
-        <View style={{ flexDirection: "row", justifyContent: "center" }}>
-          <TouchableOpacity onPress={() => searchPlaces("hospital")}>
-            <Card style={{ width: windowWidth / 2 - 32 }}>
-              <Text style={{ textAlign: "center" }}>โรงพยาบาลใกล้ฉัน</Text>
-            </Card>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => searchPlaces("police")}>
-            <Card style={{ width: windowWidth / 2 - 32 }}>
-              <Text style={{ textAlign: "center" }}>สถานีตำรวจใกล้ฉัน</Text>
-            </Card>
-          </TouchableOpacity>
+        <View style={styleUniform.container}>
+          <Text style={[styleUniform.contentText, {alignSelf: "center"}]}>
+            ค้นหาสถานที่ โดยกดปุ่มด้านล่าง
+          </Text>
+          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <TouchableOpacity onPress={() => searchPlaces("hospital")}>
+              <Card
+                style={[styleUniform.button, { width: windowWidth / 2 - 16 }]}
+              >
+                <Text style={styleUniform.buttonText}>โรงพยาบาล</Text>
+              </Card>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => searchPlaces("police")}>
+              <Card
+                style={[styleUniform.button, { width: windowWidth / 2 - 16 }]}
+              >
+                <Text style={styleUniform.buttonText}>สถานีตำรวจ</Text>
+              </Card>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </GradientBackground>

@@ -1,4 +1,5 @@
 import GradientBackground from "@/components/GredientBackground";
+import styleUniform from "@/components/StyleUniform";
 import { View, Text, StyleSheet, Linking, TouchableOpacity } from "react-native";
 
 const goToCall: Function = (phoneNumber: string) => {
@@ -22,18 +23,18 @@ const EmercallPage = () => {
   return (
     <GradientBackground>
       <View style={styles.gap}>
-        <Text>What kind of Emergency you needed to call?</Text>
+        <Text style={styleUniform.subHeaderText}>{"ต้องการเรียกหน่วยงานใด?"}</Text>
         <TouchableOpacity
           onPress={() => CallNumber(1669)}
-          style={styles.button}
+          style={styleUniform.button}
         >
-          <Text style={styles.text}>Ambulance</Text>
+          <Text style={styleUniform.buttonText}>{"รถพยาบาล (1669)"}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => CallNumber(191)} style={styles.button}>
-          <Text style={styles.text}>Police</Text>
+        <TouchableOpacity onPress={() => CallNumber(191)} style={styleUniform.button}>
+          <Text style={styleUniform.buttonText}>{"ตำรวจ (191)"}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => CallNumber(199)} style={styles.button}>
-          <Text style={styles.text}>Firefighter</Text>
+        <TouchableOpacity onPress={() => CallNumber(199)} style={styleUniform.button}>
+          <Text style={styleUniform.buttonText}>{"หน่วยดับเพลิง (199)"}</Text>
         </TouchableOpacity>
       </View>
     </GradientBackground>
@@ -45,18 +46,5 @@ export default EmercallPage;
 const styles = StyleSheet.create({
   gap: {
     gap: 5,
-  },
-  button: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 24,
-    elevation: 3,
-    backgroundColor: "#222222",
-  },
-  text: {
-    textAlign: "center",
-    color: "white"
   },
 });
