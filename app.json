@@ -14,12 +14,21 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": "AIzaSyBhrsrEV6CwXWG1yPq5iD1L2G-bJq4rEMQ"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.salty.EmerCall",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBhrsrEV6CwXWG1yPq5iD1L2G-bJq4rEMQ"
+        }
       }
     },
     "web": {
@@ -32,6 +41,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "d0548ddb-4fb1-40bf-826e-0acf45432f20"
+      }
     }
   }
 }
