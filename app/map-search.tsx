@@ -1,9 +1,20 @@
-import { ActivityIndicator, Alert, Dimensions, Linking, Text, TouchableOpacity, View } from "react-native";
-import styleUniform from "@/components/StyleUniform";
+import {
+  ActivityIndicator,
+  Alert,
+  Dimensions,
+  Linking,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import styleUniform, {
+  BackgroundProvider,
+  themeContext,
+} from "@/components/StyleUniform";
 import GradientBackground from "@/components/GredientBackground";
-import Card from "@/components/Card";
+import Card from "@/components/BasicComponentWithTheme";
 import MapView, { PROVIDER_GOOGLE, LatLng, Marker } from "react-native-maps";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import * as Location from "expo-location";
 import { router } from "expo-router";
 
@@ -22,10 +33,10 @@ const INITIAL_REGION = {
 };
 
 const mapViewPage = () => {
-  const [detailedLocation, setDetailedLocation] = useState<Location.LocationObject | null>(null);
+  const theme = useContext(themeContext);
+
   const [userLocation, setUserLocation] = useState(INITIAL_REGION);
   const [placesResults, setPlacesResults] = useState<any[]>([]);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const map = useRef<MapView | null>(null);
 
   const errorAlert = (errorMsg: string) => {
@@ -42,20 +53,19 @@ const mapViewPage = () => {
   const getLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== "granted") {
-      setErrorMsg("Permission to access location was denied");
-      errorAlert(errorMsg!);
+      errorAlert(
+        "แอปไม่ได้รับอนุญาตให้เข้าถึง GPS กรุณาตั้งค่าเพื่อใช้ฟีเจอร์นี้"
+      );
       return router.back();
     }
 
     const locationStatus = await Location.getProviderStatusAsync();
     if (!locationStatus.locationServicesEnabled) {
-      setErrorMsg("Location services are disabled. Please enable GPS.");
-      errorAlert(errorMsg!);
+      errorAlert("GPS ปิดอยู่ กรุณาเปิดเพื่อใช้ฟีเจอร์นี้");
       return router.back();
     }
 
     let currentLocation = await Location.getCurrentPositionAsync();
-    setDetailedLocation(currentLocation);
     setUserLocation({
       latitude: currentLocation.coords.latitude,
       longitude: currentLocation.coords.longitude,
@@ -83,7 +93,7 @@ const mapViewPage = () => {
       if (resultJSON && resultJSON.results) {
         setPlacesResults(resultJSON.results);
         if (resultJSON.status !== "OK") {
-          setErrorMsg("Error fetching result " + resultJSON.status);
+          errorAlert("Error fetching result " + resultJSON.status);
           console.error("Error fetching result: " + resultJSON.status);
         }
         const coords: LatLng[] = [];
@@ -101,13 +111,13 @@ const mapViewPage = () => {
         }
       }
     } catch (e) {
-      setErrorMsg("Error fetching result");
+      errorAlert("Error fetching result");
       console.error(e);
     }
   };
 
   return (
-    <GradientBackground>
+    <BackgroundProvider>
       <View style={{ flex: 1 }}>
         {userLocation === INITIAL_REGION && (
           <View
@@ -154,29 +164,57 @@ const mapViewPage = () => {
           </MapView>
         )}
         <View style={styleUniform.container}>
-          <Text style={[styleUniform.contentText, {alignSelf: "center"}]}>
+          <Text
+            style={[
+              styleUniform.contentText,
+              { alignSelf: "center", color: theme.textcolor },
+            ]}
+          >
             ค้นหาสถานที่ โดยกดปุ่มด้านล่าง
           </Text>
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
             <TouchableOpacity onPress={() => searchPlaces("hospital")}>
               <Card
-                style={[styleUniform.button, { width: windowWidth / 2 - 16 }]}
+                style={[
+                  styleUniform.button,
+                  { backgroundColor: theme.buttonColor },
+                ]}
               >
-                <Text style={styleUniform.buttonText}>โรงพยาบาล</Text>
+                <Text
+                  style={[
+                    styleUniform.buttonText,
+                    { color: theme.buttonContentColor },
+                  ]}
+                >
+                  โรงพยาบาล
+                </Text>
               </Card>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => searchPlaces("police")}>
               <Card
-                style={[styleUniform.button, { width: windowWidth / 2 - 16 }]}
+                style={[
+                  styleUniform.button,
+                  {
+                    backgroundColor: theme.buttonColor,
+                    width: windowWidth / 2 - 16,
+                  },
+                ]}
               >
-                <Text style={styleUniform.buttonText}>สถานีตำรวจ</Text>
+                <Text
+                  style={[
+                    styleUniform.buttonText,
+                    { color: theme.buttonContentColor },
+                  ]}
+                >
+                  สถานีตำรวจ
+                </Text>
               </Card>
             </TouchableOpacity>
           </View>
         </View>
       </View>
-    </GradientBackground>
+    </BackgroundProvider>
   );
-}
+};
 
 export default mapViewPage;

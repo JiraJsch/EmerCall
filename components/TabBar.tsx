@@ -7,22 +7,28 @@ import {
 } from "react-native";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { Feather } from "@expo/vector-icons";
+import { useContext } from "react";
+import { themeContext } from "./StyleUniform";
 
 export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
+  const theme = useContext(themeContext);
+
   const getIcon = (RouteName: String) => {
     if (RouteName === "home") {
-      return <Feather name="home" size={24} color={"#fff"} />;
+      return <Feather name="home" size={24} color={theme.tabBarContentColor} />;
     } else if (RouteName === "emercall") {
       return <Feather name="alert-circle" size={24} color={"#f00"} />;
     } else if (RouteName === "settings") {
-      return <Feather name="settings" size={24} color={"#fff"} />;
+      return (
+        <Feather name="settings" size={24} color={theme.tabBarContentColor} />
+      );
     } else {
-      return <Feather name="x" size={24} color={"#fff"} />;
+      return <Feather name="x" size={24} color={theme.tabBarContentColor} />;
     }
   };
 
   return (
-    <View style={styles.tabbar}>
+    <View style={[styles.tabbar, { backgroundColor: theme.tabBarColor }]}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -63,15 +69,17 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
             onLongPress={onLongPress}
             style={styles.tabbarItem}
           >
-            {getIcon(route.name)}
-            <Text style={{
-              color:
-                label === "โทรฉุกเฉิน"
+            {getIcon(route.name) as unknown as String}
+            <Text
+              style={{
+                color:
+                  label === "โทรฉุกเฉิน"
                     ? "#ff0000"
                     : isFocused
-                      ? "#673ab7"
-                      : "#ffffff"
-              }}>
+                    ? "#673ab7"
+                    : theme.tabBarContentColor,
+              }}
+            >
               {label as string}
             </Text>
           </TouchableOpacity>
@@ -92,7 +100,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#000",
     paddingVertical: 15,
   },
   tabbarItem: {

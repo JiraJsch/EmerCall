@@ -1,7 +1,11 @@
+import { themeContext } from "@/components/StyleUniform";
 import { TabBar } from "@/components/TabBar";
 import { Tabs } from "expo-router";
+import { useContext } from "react";
 
 const TabsLayout = () => {
+  const theme = useContext(themeContext);
+
   return (
     <Tabs tabBar={(props) => <TabBar {...props} />}>
       <Tabs.Screen
@@ -10,9 +14,9 @@ const TabsLayout = () => {
           headerTitle: "หน้าหลัก",
           title: "หน้าหลัก",
           headerTitleAlign: "center",
-          headerTintColor: "#fff",
+          headerTintColor: theme.tabBarContentColor,
           headerStyle: {
-            backgroundColor: "#000",
+            backgroundColor: theme.tabBarColor,
           },
         }}
       />
@@ -22,9 +26,9 @@ const TabsLayout = () => {
           headerTitle: "โทรฉุกเฉิน",
           title: "โทรฉุกเฉิน",
           headerTitleAlign: "center",
-          headerTintColor: "#f00",
+          headerTintColor: theme.tabBarContentColor,
           headerStyle: {
-            backgroundColor: "#000",
+            backgroundColor: theme.tabBarColor,
           },
         }}
       />
@@ -35,9 +39,9 @@ const TabsLayout = () => {
           headerTitleStyle: { textAlign: "center" },
           title: "ตั้งค่า",
           headerTitleAlign: "center",
-          headerTintColor: "#fff",
+          headerTintColor: theme.tabBarContentColor,
           headerStyle: {
-            backgroundColor: "#000",
+            backgroundColor: theme.tabBarColor,
           },
         }}
       />

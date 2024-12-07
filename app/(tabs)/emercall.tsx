@@ -1,12 +1,21 @@
 import GradientBackground from "@/components/GredientBackground";
-import styleUniform from "@/components/StyleUniform";
-import { View, Text, StyleSheet, Linking, TouchableOpacity } from "react-native";
+import styleUniform, {
+  BackgroundProvider,
+  themeContext,
+} from "@/components/StyleUniform";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Linking,
+  TouchableOpacity,
+} from "react-native";
+import { useContext } from "react";
+import { ThemeContext } from "@react-navigation/native";
 
 const goToCall: Function = (phoneNumber: string) => {
-  return (
-    Linking.openURL(`tel:${phoneNumber}`)
-  );
-}
+  return Linking.openURL(`tel:${phoneNumber}`);
+};
 
 const CallNumber = (hotLineNumber: number) => {
   if (hotLineNumber === 1669) {
@@ -17,34 +26,98 @@ const CallNumber = (hotLineNumber: number) => {
     alert("You're calling an Firefighter Unit (" + hotLineNumber + ")");
   }
   goToCall(hotLineNumber);
-}
+};
 
 const EmercallPage = () => {
+  const theme = useContext(themeContext);
+
   return (
-    <GradientBackground>
-      <View style={styles.gap}>
-        <Text style={styleUniform.subHeaderText}>{"ต้องการเรียกหน่วยงานใด?"}</Text>
+    <BackgroundProvider>
+      <View style={{ marginHorizontal: 12, gap: 5 }}>
+        <Text style={[styleUniform.subHeaderText, { color: theme.textcolor }]}>
+          {"เลือกเบอร์ฉุกเฉินด้านล่างเพื่อโทร"}
+        </Text>
         <TouchableOpacity
           onPress={() => CallNumber(1669)}
-          style={styleUniform.button}
+          style={[styleUniform.button, { backgroundColor: theme.buttonColor }]}
         >
-          <Text style={styleUniform.buttonText}>{"รถพยาบาล (1669)"}</Text>
+          <Text
+            style={[
+              styleUniform.buttonText,
+              { color: theme.buttonContentColor },
+            ]}
+          >
+            {"พยาบาล (ทั่วประเทศ) (1669)"}
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => CallNumber(191)} style={styleUniform.button}>
-          <Text style={styleUniform.buttonText}>{"ตำรวจ (191)"}</Text>
+        <TouchableOpacity
+          onPress={() => CallNumber(1646)}
+          style={[styleUniform.button, { backgroundColor: theme.buttonColor }]}
+        >
+          <Text
+            style={[
+              styleUniform.buttonText,
+              { color: theme.buttonContentColor },
+            ]}
+          >
+            {"พยาบาล (เฉพาะในกรุงเทพฯ) (1646)"}
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => CallNumber(199)} style={styleUniform.button}>
-          <Text style={styleUniform.buttonText}>{"หน่วยดับเพลิง (199)"}</Text>
+        <TouchableOpacity
+          onPress={() => CallNumber(199)}
+          style={[styleUniform.button, { backgroundColor: theme.buttonColor }]}
+        >
+          <Text
+            style={[
+              styleUniform.buttonText,
+              { color: theme.buttonContentColor },
+            ]}
+          >
+            {"ดับเพลิง / เผชิญสัตว์ร้าย (199)"}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => CallNumber(191)}
+          style={[styleUniform.button, { backgroundColor: theme.buttonColor }]}
+        >
+          <Text
+            style={[
+              styleUniform.buttonText,
+              { color: theme.buttonContentColor },
+            ]}
+          >
+            {"ตำรวจ (191)"}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => CallNumber(192)}
+          style={[styleUniform.button, { backgroundColor: theme.buttonColor }]}
+        >
+          <Text
+            style={[
+              styleUniform.buttonText,
+              { color: theme.buttonContentColor },
+            ]}
+          >
+            {"เกิดภัยพิบัติ (192)"}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => CallNumber(1300)}
+          style={[styleUniform.button, { backgroundColor: theme.buttonColor }]}
+        >
+          <Text
+            style={[
+              styleUniform.buttonText,
+              { color: theme.buttonContentColor },
+            ]}
+          >
+            {"บุคคลสูญหาย (1300)"}
+          </Text>
         </TouchableOpacity>
       </View>
-    </GradientBackground>
+    </BackgroundProvider>
   );
 };
 
 export default EmercallPage;
-
-const styles = StyleSheet.create({
-  gap: {
-    gap: 5,
-  },
-});

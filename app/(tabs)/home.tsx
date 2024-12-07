@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  StyleSheet,
   Image,
   TouchableOpacity,
   ScrollView,
@@ -11,10 +10,10 @@ import {
 } from "react-native";
 import * as Location from "expo-location";
 import { Feather } from "@expo/vector-icons";
-import GradientBackground from "@/components/GredientBackground";
-import Card from "@/components/Card";
+import Card from "@/components/BasicComponentWithTheme";
 import { router } from "expo-router";
-import styleUniform from "@/components/StyleUniform";
+import styleUniform, { BackgroundProvider, themeContext } from "@/components/StyleUniform";
+import { useContext } from "react";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -23,7 +22,11 @@ const goToCall: Function = (phoneNumber: string) => {
   return Linking.openURL(`tel:${phoneNumber}`);
 };
 
-const DepartmentLine = (departmentName: string, hotLine: string, isImportant?: boolean) => {
+const DepartmentLine = (departmentName: string, hotLine: string, flag?:{isImportant: boolean}) => {
+  const theme = useContext(themeContext);
+  let isImportant = flag?.isImportant
+  if (isImportant === undefined) isImportant = false;
+
   const handleConfirmCall = (hotLine: String) => {
     Alert.alert("แน่ใจหรือไม่?", "คุณจะโทรไปยัง\n" + hotLine + " : " + departmentName + " หรือไม่", [
       {
@@ -39,17 +42,20 @@ const DepartmentLine = (departmentName: string, hotLine: string, isImportant?: b
 
   return (
     <Card
+      isPrimary={false}
       style={{
-        backgroundColor: isImportant ? "#dd0000" : "#aaaaaa",
+        backgroundColor: isImportant
+          ? "#dd0000"
+          : theme.cardColorSecondary,
         width: 200,
       }}
     >
       <Text
         numberOfLines={2}
         style={{
-          lineHeight: 15,
-          height: 30,
-          color: isImportant ? "#ffffff" : "#000000",
+          lineHeight: 18,
+          height: 36,
+          color: isImportant ? "#ffffff" : theme.cardContentColorSecondary,
         }}
       >
         {departmentName}
@@ -61,7 +67,7 @@ const DepartmentLine = (departmentName: string, hotLine: string, isImportant?: b
             styleUniform.numberText,
             {
               flex: 1 - (200 - 24),
-              color: isImportant ? "#ffffff" : "#000000",
+              color: isImportant ? "#ffffff" : theme.cardContentColorSecondary,
             },
           ]}
         >
@@ -72,7 +78,11 @@ const DepartmentLine = (departmentName: string, hotLine: string, isImportant?: b
             return handleConfirmCall(hotLine);
           }}
         >
-          <Feather name="phone" size={24} color={isImportant ? "#ffffff" : "#000000"} />
+          <Feather
+            name="phone"
+            size={24}
+            color={isImportant ? "#ffffff" : theme.cardContentColorSecondary}
+          />
         </TouchableOpacity>
       </View>
     </Card>
@@ -80,6 +90,7 @@ const DepartmentLine = (departmentName: string, hotLine: string, isImportant?: b
 };
 
 const HomePage = () => {
+  const theme = useContext(themeContext)
   const errorAlert = (errorMsg: string) => {
     Alert.alert("Error", errorMsg, [
       {
@@ -92,17 +103,17 @@ const HomePage = () => {
   const handleToMapSearchPage = async () => {
     const { status: Permissionstatus } = await Location.requestForegroundPermissionsAsync();
     if (Permissionstatus !== "granted") {
-      return errorAlert("Permission to access location was denied");
+      return errorAlert("แอปไม่ได้รับอนุญาตให้เข้าถึง GPS กรุณาตั้งค่าเพื่อใช้ฟีเจอร์นี้");
     }
     const locationStatus = await Location.getProviderStatusAsync();
     if (!locationStatus.locationServicesEnabled) {
-      return errorAlert("Location services are disabled. Please enable GPS.");
+      return errorAlert("GPS ปิดอยู่ กรุณาเปิดเพื่อใช้ฟีเจอร์นี้");
     }
     router.navigate("/map-search")
   }
 
   return (
-    <GradientBackground>
+    <BackgroundProvider>
       <View
         style={{
           flex: 1 - 87 / windowHeight,
@@ -116,8 +127,11 @@ const HomePage = () => {
             alignItems: "center",
           }}
         >
-          <Text numberOfLines={1} style={styleUniform.PageHeadText}>
-            {"สวัสดีครับ"}
+          <Text
+            numberOfLines={1}
+            style={[styleUniform.PageHeadText, { color: theme.textcolor }]}
+          >
+            สวัสดีครับ
           </Text>
           <Image
             source={require("@/assets/images/logo-wording.png")}
@@ -126,21 +140,37 @@ const HomePage = () => {
           />
         </View>
         <TouchableOpacity onPress={handleToMapSearchPage}>
-          <Card style={styleUniform.button}>
-            <Text style={styleUniform.buttonText}>
+          <Card
+            style={[
+              styleUniform.button,
+              { backgroundColor: theme.buttonColor },
+            ]}
+          >
+            <Text
+              style={[
+                styleUniform.buttonText,
+                { color: theme.buttonContentColor },
+              ]}
+            >
               🚨ค้นหาสถานที่ฉุกเฉินใกล้เคียง🚨
             </Text>
           </Card>
         </TouchableOpacity>
-        <Text style={styleUniform.subHeaderText}>
+        <Text style={[styleUniform.subHeaderText, { color: theme.textcolor }]}>
           เบอร์โทรของหน่วยงานภาครัฐ
         </Text>
         <ScrollView showsVerticalScrollIndicator={true}>
-          <Card style={styleUniform.card1}>
-            <Text>แจ้งเหตุด่วนเหตุร้าย</Text>
+          <Card>
+            <Text style={{ color: theme.cardContentColorPrimary }}>
+              แจ้งเหตุด่วนเหตุร้าย
+            </Text>
             <ScrollView horizontal={true} style={{ flexDirection: "row" }}>
-              {DepartmentLine("เหตุด่วน - เหตุร้าย", "191", true)}
-              {DepartmentLine("เหตุอัคคีภัย - สัตว์เข้าบ้าน", "199", true)}
+              {DepartmentLine("เหตุด่วน - เหตุร้าย", "191", {
+                isImportant: true,
+              })}
+              {DepartmentLine("เหตุอัคคีภัย - สัตว์เข้าบ้าน", "199", {
+                isImportant: true,
+              })}
               {DepartmentLine("ศุนย์ความปลอดภัย กรมทางหลวงชนบท", "1146")}
               {DepartmentLine("ตำรวจท่องเที่ยว", "1155")}
               {DepartmentLine(
@@ -163,21 +193,37 @@ const HomePage = () => {
               {DepartmentLine("ศูนย์พิทักษ์เด็ก เยาวชนและสตรี", "1677")}
             </ScrollView>
           </Card>
-          <Card style={styleUniform.card1}>
-            <Text>เหตุฉุกเฉิน</Text>
+          <Card>
+            <Text style={{ color: theme.cardContentColorPrimary }}>
+              เหตุฉุกเฉิน
+            </Text>
             <ScrollView horizontal={true} style={{ flexDirection: "row" }}>
-              {DepartmentLine("ศูนย์เตือนภัยพิบัติแห่งชาติ", "192", true)}
-              {DepartmentLine("ศูนย์ประชาบดี แจ้งคนหาย", "1300", true)}
+              {DepartmentLine("ศูนย์เตือนภัยพิบัติแห่งชาติ", "192", {
+                isImportant: true,
+              })}
+              {DepartmentLine("ศูนย์ประชาบดี แจ้งคนหาย", "1300", {
+                isImportant: true,
+              })}
               {DepartmentLine("ศูนย์ปลอดภัยคมนาคม", "1356")}
               {DepartmentLine("ศูนย์ร้องทุกข์กรุงเทพมหานคร", "1555")}
             </ScrollView>
           </Card>
-          <Card style={styleUniform.card1}>
-            <Text>บริการทางการแพทย์</Text>
+          <Card>
+            <Text style={{ color: theme.cardContentColorPrimary }}>
+              บริการทางการแพทย์
+            </Text>
             <ScrollView horizontal={true} style={{ flexDirection: "row" }}>
-              {DepartmentLine("สถาบันการแพทย์ฉุกเฉินแห่งชาติ", "1669", true)}
-              {DepartmentLine("ศูนย์เอราวัณ สำนักการแพทย์ กรุงเทพมหานคร","1646", true)}
-              {DepartmentLine("หน่วยแพทย์กู้ชีวิต วชิรพยาบาล", "1554", true)}
+              {DepartmentLine("สถาบันการแพทย์ฉุกเฉินแห่งชาติ", "1669", {
+                isImportant: true,
+              })}
+              {DepartmentLine(
+                "ศูนย์เอราวัณ สำนักการแพทย์ กรุงเทพมหานคร",
+                "1646",
+                { isImportant: true }
+              )}
+              {DepartmentLine("หน่วยแพทย์กู้ชีวิต วชิรพยาบาล", "1554", {
+                isImportant: true,
+              })}
               {DepartmentLine("สายด่วนยาเสพติด กรมการแพทย์", "1165")}
               {DepartmentLine("สำนักงานหลักประกันสุขภาพแห่งชาติ", "1330")}
               {DepartmentLine("ศูนย์พิษวิทยา ร.พ.รามาธิบดี", "1367")}
@@ -187,8 +233,10 @@ const HomePage = () => {
               {DepartmentLine("กรมสุขภาพจิต", "1667")}
             </ScrollView>
           </Card>
-          <Card style={styleUniform.card1}>
-            <Text>สาธารณูปโภค</Text>
+          <Card>
+            <Text style={{ color: theme.cardContentColorPrimary }}>
+              สาธารณูปโภค
+            </Text>
             <ScrollView horizontal={true} style={{ flexDirection: "row" }}>
               {DepartmentLine("การประปานครหลวง", "1125")}
               {DepartmentLine("การไฟฟ้านครหลวง", "1130")}
@@ -197,8 +245,10 @@ const HomePage = () => {
               {DepartmentLine("ชลประทานบริการประชาชน", "1460")}
             </ScrollView>
           </Card>
-          <Card style={styleUniform.card1}>
-            <Text>หน่วยงานราชการ</Text>
+          <Card>
+            <Text style={{ color: theme.cardContentColorPrimary }}>
+              หน่วยงานราชการ
+            </Text>
             <ScrollView horizontal={true} style={{ flexDirection: "row" }}>
               {DepartmentLine("ศูนย์บริการภาครัฐเพื่อประชาชน", "1111")}
               {DepartmentLine("วุฒิสภา", "1102")}
@@ -234,8 +284,10 @@ const HomePage = () => {
               {DepartmentLine("สำนักงานคณะกรรมการการเลือกตั้ง", "1171")}
             </ScrollView>
           </Card>
-          <Card style={styleUniform.card1}>
-            <Text>ผู้ให้บริการโทรคมนาคม</Text>
+          <Card>
+            <Text style={{ color: theme.cardContentColorPrimary }}>
+              ผู้ให้บริการโทรคมนาคม
+            </Text>
             <ScrollView horizontal={true} style={{ flexDirection: "row" }}>
               {DepartmentLine("TOT", "1100")}
               {DepartmentLine("AIS", "1175")}
@@ -243,8 +295,10 @@ const HomePage = () => {
               {DepartmentLine("DTAC", "1678")}
             </ScrollView>
           </Card>
-          <Card style={styleUniform.card1}>
-            <Text>สถาบันการเงิน</Text>
+          <Card>
+            <Text style={{ color: theme.cardContentColorPrimary }}>
+              สถาบันการเงิน
+            </Text>
             <ScrollView horizontal={true} style={{ flexDirection: "row" }}>
               {DepartmentLine("ธนาคารออมสิน", "1115")}
               {DepartmentLine(
@@ -263,8 +317,10 @@ const HomePage = () => {
               {DepartmentLine("ธนาคารยูโอบี", "022851555")}
             </ScrollView>
           </Card>
-          <Card style={styleUniform.card1}>
-            <Text>สอบถามข้อมูลการขนส่ง</Text>
+          <Card>
+            <Text style={{ color: theme.cardContentColorPrimary }}>
+              สอบถามข้อมูลการขนส่ง
+            </Text>
             <ScrollView horizontal={true} style={{ flexDirection: "row" }}>
               {DepartmentLine("ตำรวจทางหลวง", "1193")}
               {DepartmentLine("ศูนย์ควบคุมและสั่งการจราจร", "1197")}
@@ -295,8 +351,8 @@ const HomePage = () => {
               {DepartmentLine("กรมการบินพลเรือน", "022860506")}
             </ScrollView>
           </Card>
-          <Card style={styleUniform.card1}>
-            <Text>{"อื่น ๆ"}</Text>
+          <Card>
+            <Text style={{ color: theme.cardContentColorPrimary }}>อื่น ๆ</Text>
             <ScrollView horizontal={true} style={{ flexDirection: "row" }}>
               {DepartmentLine(
                 "สอบถามเวลามาตรฐานประเทศไทย สถาบันมาตรวิทยาแห่งชาติ",
@@ -311,7 +367,7 @@ const HomePage = () => {
           </Card>
         </ScrollView>
       </View>
-    </GradientBackground>
+    </BackgroundProvider>
   );
 };
 
