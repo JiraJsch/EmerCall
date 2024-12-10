@@ -7,7 +7,7 @@ const Card = (props: {
   style?: StyleProp<any>;
   children: ReactNode;
 }) => {
-  const { isPrimary= true, style, children } = props;
+  const { isPrimary = true, style, children } = props;
   const theme = useContext(themeContext);
   return (
     <View

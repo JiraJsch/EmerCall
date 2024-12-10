@@ -1,8 +1,10 @@
-import Card from "@/components/BasicComponentWithTheme";
-import styleUniform, { BackgroundProvider, themeContext } from "@/components/StyleUniform";
+import styleUniform, {
+  BackgroundProvider,
+  themeContext,
+} from "@/components/StyleUniform";
 import { useContext } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { EventRegister } from 'react-native-event-listeners';
+import { EventRegister } from "react-native-event-listeners";
 
 const settingsPage = () => {
   const theme = useContext(themeContext);
@@ -33,14 +35,14 @@ const settingsPage = () => {
           }}
           style={[styleUniform.button, { backgroundColor: theme.buttonColor }]}
         >
-            <Text
-              style={[
-                styleUniform.buttonText,
-                { color: theme.buttonContentColor },
-              ]}
-            >
-              มืด
-            </Text>
+          <Text
+            style={[
+              styleUniform.buttonText,
+              { color: theme.buttonContentColor },
+            ]}
+          >
+            มืด
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -48,14 +50,14 @@ const settingsPage = () => {
           }}
           style={[styleUniform.button, { backgroundColor: theme.buttonColor }]}
         >
-            <Text
-              style={[
-                styleUniform.buttonText,
-                { color: theme.buttonContentColor },
-              ]}
-            >
-              สว่าง
-            </Text>
+          <Text
+            style={[
+              styleUniform.buttonText,
+              { color: theme.buttonContentColor },
+            ]}
+          >
+            สว่าง
+          </Text>
         </TouchableOpacity>
       </View>
     </BackgroundProvider>

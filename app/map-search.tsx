@@ -2,7 +2,6 @@ import {
   ActivityIndicator,
   Alert,
   Dimensions,
-  Linking,
   Text,
   TouchableOpacity,
   View,
@@ -11,7 +10,6 @@ import styleUniform, {
   BackgroundProvider,
   themeContext,
 } from "@/components/StyleUniform";
-import GradientBackground from "@/components/GredientBackground";
 import Card from "@/components/BasicComponentWithTheme";
 import MapView, { PROVIDER_GOOGLE, LatLng, Marker } from "react-native-maps";
 import { useState, useRef, useEffect, useContext } from "react";
@@ -20,10 +18,6 @@ import { router } from "expo-router";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-
-const goToCall: Function = (phoneNumber: string) => {
-  return Linking.openURL(`tel:${phoneNumber}`);
-};
 
 const INITIAL_REGION = {
   latitude: 13.080361,
@@ -77,7 +71,7 @@ const mapViewPage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       getLocation();
-    }, 5000);
+    }, 1000);
     return () => clearTimeout(timer);
   }, [getLocation]);
 
@@ -123,12 +117,16 @@ const mapViewPage = () => {
           <View
             style={{
               flex: 1,
-              backgroundColor: "#555",
-              opacity: 0.5,
+              backgroundColor: theme.cardColorPrimary,
               justifyContent: "center",
             }}
           >
-            <Text style={[styleUniform.contentText, { alignSelf: "center" }]}>
+            <Text
+              style={[
+                styleUniform.contentText,
+                { alignSelf: "center", color: theme.cardContentColorPrimary },
+              ]}
+            >
               {"กำลังดึงข้อมูลตำแหน่ง"}
             </Text>
             <ActivityIndicator

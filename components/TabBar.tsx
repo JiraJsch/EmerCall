@@ -13,17 +13,45 @@ import { themeContext } from "./StyleUniform";
 export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   const theme = useContext(themeContext);
 
-  const getIcon = (RouteName: String) => {
+  const getIcon = (RouteName: String, isFocused?: boolean) => {
     if (RouteName === "home") {
-      return <Feather name="home" size={24} color={theme.tabBarContentColor} />;
+      return (
+        <Feather
+          name="home"
+          size={24}
+          color={
+            isFocused
+              ? theme.tabBarContnentFocusedColor
+              : theme.tabBarContentColor
+          }
+        />
+      );
     } else if (RouteName === "emercall") {
       return <Feather name="alert-circle" size={24} color={"#f00"} />;
     } else if (RouteName === "settings") {
       return (
-        <Feather name="settings" size={24} color={theme.tabBarContentColor} />
+        <Feather
+          name="settings"
+          size={24}
+          color={
+            isFocused
+              ? theme.tabBarContnentFocusedColor
+              : theme.tabBarContentColor
+          }
+        />
       );
     } else {
-      return <Feather name="x" size={24} color={theme.tabBarContentColor} />;
+      return (
+        <Feather
+          name="x"
+          size={24}
+          color={
+            isFocused
+              ? theme.tabBarContnentFocusedColor
+              : theme.tabBarContentColor
+          }
+        />
+      );
     }
   };
 
@@ -69,14 +97,14 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
             onLongPress={onLongPress}
             style={styles.tabbarItem}
           >
-            {getIcon(route.name) as unknown as String}
+            {getIcon(route.name, isFocused)}
             <Text
               style={{
                 color:
                   label === "โทรฉุกเฉิน"
                     ? "#ff0000"
                     : isFocused
-                    ? "#673ab7"
+                    ? theme.tabBarContnentFocusedColor
                     : theme.tabBarContentColor,
               }}
             >

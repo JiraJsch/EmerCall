@@ -5,8 +5,6 @@ import React, { ReactNode, createContext, useContext } from "react";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-let styleValue: ThemeValue = "default";
-
 interface BackgroundProviderProps {
   children: ReactNode;
 }
@@ -28,9 +26,10 @@ export const BackgroundProvider: React.FC<BackgroundProviderProps> = ({
 export const theme = {
   default: {
     textcolor: "#fff",
-    backgroundColor: "#000", // Just in case if there is something wrong with the GradientBackground
+    backgroundColor: "#000",
     tabBarColor: "#222",
     tabBarContentColor: "#fff",
+    tabBarContnentFocusedColor: "#673ab7",
     buttonColor: "#000",
     buttonContentColor: "#fff",
     cardColorPrimary: "#ddd",
@@ -44,24 +43,26 @@ export const theme = {
     backgroundColor: "#000",
     tabBarColor: "#222",
     tabBarContentColor: "#fff",
+    tabBarContnentFocusedColor: "#673ab7",
     buttonColor: "#fff",
     buttonContentColor: "#000",
-    cardColorPrimary: "#666",
+    cardColorPrimary: "#444",
     cardContentColorPrimary: "#fff",
-    cardColorSecondary: "#bbb",
+    cardColorSecondary: "#fff",
     cardContentColorSecondary: "#000",
     themeValue: "dark" as ThemeValue,
   },
   light: {
     textcolor: "#000",
     backgroundColor: "#fff",
-    tabBarColor: "#ccc",
+    tabBarColor: "#eee",
     tabBarContentColor: "#000",
+    tabBarContnentFocusedColor: "#673ab7",
     buttonColor: "#000",
     buttonContentColor: "#fff",
     cardColorPrimary: "#ccc",
     cardContentColorPrimary: "#000",
-    cardColorSecondary: "#888",
+    cardColorSecondary: "#aaa",
     cardContentColorSecondary: "#000",
     themeValue: "light" as ThemeValue,
   },

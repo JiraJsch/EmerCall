@@ -1,17 +1,9 @@
-import GradientBackground from "@/components/GredientBackground";
 import styleUniform, {
   BackgroundProvider,
   themeContext,
 } from "@/components/StyleUniform";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Linking,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, Linking, TouchableOpacity } from "react-native";
 import { useContext } from "react";
-import { ThemeContext } from "@react-navigation/native";
 
 const goToCall: Function = (phoneNumber: string) => {
   return Linking.openURL(`tel:${phoneNumber}`);

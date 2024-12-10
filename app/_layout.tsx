@@ -11,7 +11,6 @@ export {
   ErrorBoundary,
 } from "expo-router";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -42,13 +41,16 @@ function RootLayoutNav() {
   const [themeValue, setThemeValue] = useState<ThemeValue>("default");
 
   useEffect(() => {
-    const listener = EventRegister.addEventListener("ChangeTheme", (themeValue) => {
-      setThemeValue(themeValue);
-    });
+    const listener = EventRegister.addEventListener(
+      "ChangeTheme",
+      (themeValue) => {
+        setThemeValue(themeValue);
+      }
+    );
     return () => {
       EventRegister.removeEventListener(listener as string);
-    }
-  }, [themeValue])
+    };
+  }, [themeValue]);
 
   return (
     <themeContext.Provider

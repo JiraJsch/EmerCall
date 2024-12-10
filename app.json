@@ -20,6 +20,7 @@
       }
     },
     "android": {
+      "icon": "./assets/images/icon.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -30,11 +31,6 @@
           "apiKey": "AIzaSyBhrsrEV6CwXWG1yPq5iD1L2G-bJq4rEMQ"
         }
       }
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
       "expo-router"
