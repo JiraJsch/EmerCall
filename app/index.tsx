@@ -16,14 +16,16 @@ const appInit = () => {
 
   if (loading) {
     return (
-      <GradientBackground style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <GradientBackground
+        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+      >
         <Image
-            source={require("@/assets/images/logo-wording.png")}
-            style={styleUniform.mainImage}
-            resizeMode="contain"
-          />
+          source={require("@/assets/images/logo-wording.png")}
+          style={styleUniform.mainImage}
+          resizeMode="contain"
+        />
         <ActivityIndicator size="large" color="#fff" />
-        <Text style={{color: "#fff"}}>Loading...</Text>
+        <Text style={{ color: "#fff" }}>Loading...</Text>
       </GradientBackground>
     );
   }
