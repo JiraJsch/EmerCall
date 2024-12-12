@@ -88,8 +88,8 @@ const styleUniform = StyleSheet.create({
     fontWeight: "bold",
   },
   contentText: {
-    height: 28,
-    fontSize: 20,
+    height: 24,
+    fontSize: 16,
     fontWeight: "regular",
   },
   PageHeadText: {

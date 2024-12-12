@@ -14,6 +14,9 @@ const settingsPage = () => {
         <Text style={[styleUniform.subHeaderText, { color: theme.textcolor }]}>
           Theme
         </Text>
+        <Text style={[styleUniform.contentText, { color: theme.textcolor }]}>
+          {"อาจใช้เวลา 1-2 วินาทีในการเปลี่ยน"}
+        </Text>
         <TouchableOpacity
           onPress={() => {
             EventRegister.emit("ChangeTheme", "default");
