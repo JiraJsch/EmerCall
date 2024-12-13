@@ -1,10 +1,10 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useEffect, useState } from "react";
 import { EventRegister } from "react-native-event-listeners";
 import { theme, themeContext } from "@/components/StyleUniform";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -13,38 +13,40 @@ export {
 
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-    ...FontAwesome.font,
-  });
-
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-  useEffect(() => {
-    if (error) throw error;
-  }, [error]);
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
-  return <RootLayoutNav />;
-}
-
-function RootLayoutNav() {
+const RootLayout = () => {
   const [themeValue, setThemeValue] = useState<ThemeValue>("default");
+
+  const storeTheme = async (themeValue: ThemeValue) => {
+    try {
+      await AsyncStorage.setItem("theme", themeValue);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getTheme = async () => {
+    try {
+      const theme = await AsyncStorage.getItem("theme") as ThemeValue;
+      if (theme) {
+        setThemeValue(theme);
+      } else {
+        storeTheme("default");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getTheme();
+  }, []);
 
   useEffect(() => {
     const listener = EventRegister.addEventListener(
       "ChangeTheme",
       (themeValue) => {
         setThemeValue(themeValue);
+        storeTheme(themeValue);
       }
     );
     return () => {
@@ -80,3 +82,5 @@ function RootLayoutNav() {
     </themeContext.Provider>
   );
 }
+
+export default RootLayout;

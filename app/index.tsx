@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, Text, Image } from "react-native";
-import { router } from "expo-router";
+import { router, SplashScreen } from "expo-router";
 import GradientBackground from "@/components/GredientBackground";
 import styleUniform from "@/components/StyleUniform";
 
@@ -10,6 +10,7 @@ const appInit = () => {
   useEffect(() => {
     setTimeout(() => { // setTimeout ensures the rendering goes first, preventing error of navigation before rendering
       router.replace("/(tabs)/home");
+      SplashScreen.hideAsync();
       setLoading(false);
     }, 1);
   }, []);
