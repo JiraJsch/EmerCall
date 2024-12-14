@@ -117,16 +117,6 @@ const styleUniform = StyleSheet.create({
     height: 50,
     alignSelf: "flex-end",
   },
-  textInput: {
-    fontSize: 16,
-    backgroundColor: "#eeeeee",
-    padding: 8,
-    borderColor: "#000000",
-    borderRadius: 32,
-    borderWidth: 2,
-    height: 48,
-    marginBottom: 8,
-  },
   card: {
     borderRadius: 10,
     elevation: 3,
