@@ -9,7 +9,7 @@ const goToCall: Function = (phoneNumber: string) => {
   return Linking.openURL(`tel:${phoneNumber}`);
 };
 
-const CallNumber = (Message: String, hotLineNumber: number) => {
+const CallNumber = (hotLineNumber: number) => {
   alert("คุณกำลังโทรไปยัง " + hotLineNumber);
   goToCall(hotLineNumber);
 };
@@ -18,7 +18,7 @@ const HotLine = (Message: String, HotLine: number) => {
   const theme = useContext(themeContext);
   return(
     <TouchableOpacity
-      onPress={() => CallNumber(Message, HotLine)}
+      onPress={() => CallNumber(HotLine)}
       style={[styleUniform.button, { backgroundColor: theme.buttonColor }]}
     >
       <Text
