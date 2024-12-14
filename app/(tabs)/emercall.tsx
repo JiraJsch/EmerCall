@@ -9,14 +9,8 @@ const goToCall: Function = (phoneNumber: string) => {
   return Linking.openURL(`tel:${phoneNumber}`);
 };
 
-const CallNumber = (hotLineNumber: number) => {
-  if (hotLineNumber === 1669) {
-    alert("You're calling an Ambulance service (" + hotLineNumber + ")");
-  } else if (hotLineNumber === 191) {
-    alert("You're calling an Police Unit (" + hotLineNumber + ")");
-  } else if (hotLineNumber === 199) {
-    alert("You're calling an Firefighter Unit (" + hotLineNumber + ")");
-  }
+const CallNumber = (Message: String, hotLineNumber: number) => {
+  alert("คุณกำลังโทรไปยัง " + hotLineNumber);
   goToCall(hotLineNumber);
 };
 
@@ -24,7 +18,7 @@ const HotLine = (Message: String, HotLine: number) => {
   const theme = useContext(themeContext);
   return(
     <TouchableOpacity
-      onPress={() => CallNumber(HotLine)}
+      onPress={() => CallNumber(Message, HotLine)}
       style={[styleUniform.button, { backgroundColor: theme.buttonColor }]}
     >
       <Text
