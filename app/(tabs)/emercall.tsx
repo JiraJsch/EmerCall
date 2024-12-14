@@ -20,6 +20,22 @@ const CallNumber = (hotLineNumber: number) => {
   goToCall(hotLineNumber);
 };
 
+const HotLine = (Message: String, HotLine: number) => {
+  const theme = useContext(themeContext);
+  return(
+    <TouchableOpacity
+      onPress={() => CallNumber(HotLine)}
+      style={[styleUniform.button, { backgroundColor: theme.buttonColor }]}
+    >
+      <Text
+        style={[styleUniform.buttonText, { color: theme.buttonContentColor }]}
+      >
+        {Message + " (" + HotLine + ")"}
+      </Text>
+    </TouchableOpacity>
+  );
+}
+
 const EmercallPage = () => {
   const theme = useContext(themeContext);
 
@@ -29,84 +45,12 @@ const EmercallPage = () => {
         <Text style={[styleUniform.subHeaderText, { color: theme.textcolor }]}>
           {"เลือกเบอร์ฉุกเฉินด้านล่างเพื่อโทร"}
         </Text>
-        <TouchableOpacity
-          onPress={() => CallNumber(1669)}
-          style={[styleUniform.button, { backgroundColor: theme.buttonColor }]}
-        >
-          <Text
-            style={[
-              styleUniform.buttonText,
-              { color: theme.buttonContentColor },
-            ]}
-          >
-            {"พยาบาล (ทั่วประเทศ) (1669)"}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => CallNumber(1646)}
-          style={[styleUniform.button, { backgroundColor: theme.buttonColor }]}
-        >
-          <Text
-            style={[
-              styleUniform.buttonText,
-              { color: theme.buttonContentColor },
-            ]}
-          >
-            {"พยาบาล (เฉพาะในกรุงเทพฯ) (1646)"}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => CallNumber(199)}
-          style={[styleUniform.button, { backgroundColor: theme.buttonColor }]}
-        >
-          <Text
-            style={[
-              styleUniform.buttonText,
-              { color: theme.buttonContentColor },
-            ]}
-          >
-            {"ดับเพลิง / เผชิญสัตว์ร้าย (199)"}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => CallNumber(191)}
-          style={[styleUniform.button, { backgroundColor: theme.buttonColor }]}
-        >
-          <Text
-            style={[
-              styleUniform.buttonText,
-              { color: theme.buttonContentColor },
-            ]}
-          >
-            {"ตำรวจ (191)"}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => CallNumber(192)}
-          style={[styleUniform.button, { backgroundColor: theme.buttonColor }]}
-        >
-          <Text
-            style={[
-              styleUniform.buttonText,
-              { color: theme.buttonContentColor },
-            ]}
-          >
-            {"เกิดภัยพิบัติ (192)"}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => CallNumber(1300)}
-          style={[styleUniform.button, { backgroundColor: theme.buttonColor }]}
-        >
-          <Text
-            style={[
-              styleUniform.buttonText,
-              { color: theme.buttonContentColor },
-            ]}
-          >
-            {"บุคคลสูญหาย (1300)"}
-          </Text>
-        </TouchableOpacity>
+        {HotLine("พยาบาล (ทั่วประเทศ)", 1669)}
+        {HotLine("พยาบาล (เฉพาะในกรุงเทพฯ)", 1646)}
+        {HotLine("ดับเพลิง / เผชิญสัตว์ร้าย", 199)}
+        {HotLine("ตำรวจ", 191)}
+        {HotLine("เกิดภัยพิบัติ", 192)}
+        {HotLine("บุคคลสูญหาย", 1300)}
       </View>
     </BackgroundProvider>
   );
