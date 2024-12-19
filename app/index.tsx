@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, Text, Image } from "react-native";
 import { router, SplashScreen } from "expo-router";
-import GradientBackground from "@/components/GredientBackground";
+import GradientBackground from "@/components/GradientBackground";
 import styleUniform from "@/components/StyleUniform";
 
 const appInit = () => {

@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions, View } from "react-native";
-import GradientBackground from "./GredientBackground";
+import GradientBackground from "./GradientBackground";
 import React, { ReactNode, createContext, useContext } from "react";
 
 const windowWidth = Dimensions.get("window").width;

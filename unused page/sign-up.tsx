@@ -12,7 +12,7 @@ import {
   Pressable,
 } from "react-native";
 import { useRouter } from "expo-router";
-import GradientBackground from "@/components/GredientBackground";
+import GradientBackground from "@/components/GradientBackground";
 import styleUniform from "@/components/StyleUniform";
 
 export default function SignUpScreen() {

@@ -1,4 +1,4 @@
-import GradientBackground from "@/components/GredientBackground";
+import GradientBackground from "@/components/GradientBackground";
 import styleUniform from "@/components/StyleUniform";
 import { router } from "expo-router";
 import { useState } from "react";
